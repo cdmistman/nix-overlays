@@ -325,13 +325,11 @@ with oself;
     inherit (http) src version;
     propagatedBuildInputs = o.propagatedBuildInputs ++ [ http ];
     doCheck = false;
+
+    postPatch = ''
+      substituteInPlace cohttp/src/dune --replace "bytes" ""
+    '';
   });
-  cohttp-eio = buildDunePackage {
-    pname = "cohttp-eio";
-    inherit (http) src version;
-    doCheck = false;
-    propagatedBuildInputs = [ cohttp eio_main ];
-  };
 
   conan = callPackage ./conan { };
   conan-lwt = callPackage ./conan/lwt.nix { };
@@ -1895,7 +1893,6 @@ with oself;
       substituteInPlace src/dune --replace " bigarray" ""
     '';
   });
-
 
   core = osuper.core.overrideAttrs (o: {
     src = builtins.fetchurl {

@@ -15,6 +15,13 @@ with oself;
     propagatedBuildInputs = [ eio eio_main caqti ];
   };
 
+  cohttp-eio = buildDunePackage {
+    pname = "cohttp-eio";
+    inherit (http) src version;
+    doCheck = false;
+    propagatedBuildInputs = [ cohttp eio_main ];
+  };
+
   domainslib = callPackage ./domainslib { };
   lockfree = callPackage ./lockfree { };
 
